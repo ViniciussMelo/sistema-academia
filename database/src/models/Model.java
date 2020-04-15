@@ -5,6 +5,8 @@ import service.Service;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 @MappedSuperclass
 public class Model<T extends Model<T>> {

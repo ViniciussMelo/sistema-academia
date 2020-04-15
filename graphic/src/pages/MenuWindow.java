@@ -1,5 +1,9 @@
 package pages;
 
+import application.ApplicationContext;
+import models.user.TipoUsuarioEnum;
+import models.user.User;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -34,9 +38,6 @@ public class MenuWindow extends JFrame {
     }
 
     public MenuWindow() {
-        /*User user = ApplicationContext.getUser();
-        user.setName("Teste");*/
-
         setTitle("Menu - Academia Braço Direito");
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -59,76 +60,93 @@ public class MenuWindow extends JFrame {
 
         menuCriar();
 
-        JOptionPane.showMessageDialog(null, "Academia Bombad�o (Usu�rio: )");
-        //JOptionPane.showMessageDialog(null, "Academia Bombad�o (Usu�rio: " + user.getName() + ")");
+        JOptionPane.showMessageDialog(null, "Academia DEFINE (Usuário: " + ApplicationContext.getUser().getName() + ")");
     }
 
-    private void menuCriar() {
-        bar = new JMenuBar();
-
-        sistema = new JMenu("Sistema");
-            sistema.setMnemonic('S');
-
-            sistemaLogout = new JMenuItem(itemLogout);
-            sistemaLogout.setMnemonic('l');
-            sistema.add(sistemaLogout);
-
-            sistemaSair = new JMenuItem(itemSair);
-            sistemaSair.setMnemonic('a');
-            sistema.add(sistemaSair);
-
+    private void criarMenuCadastro() {
         cadastro = new JMenu("Cadastro");
-            cadastro.setMnemonic('C');
+        cadastro.setMnemonic('C');
 
-            cadastroUsuario = new JMenuItem("Usu�rio");
-            cadastroUsuario.setMnemonic('U');
-            cadastro.add(cadastroUsuario);
+        cadastroUsuario = new JMenuItem("Usuário");
+        cadastroUsuario.setMnemonic('U');
+        cadastro.add(cadastroUsuario);
 
-            cadastroEmpresa = new JMenuItem("Empresa");
-            cadastroEmpresa.setMnemonic('E');
-            cadastro.add(cadastroEmpresa);
+        cadastroEmpresa = new JMenuItem("Empresa");
+        cadastroEmpresa.setMnemonic('E');
+        cadastro.add(cadastroEmpresa);
 
-            cadastroModalidade = new JMenuItem("Modalidade");
-            cadastroModalidade.setMnemonic('M');
-            cadastro.add(cadastroModalidade);
+        cadastroModalidade = new JMenuItem("Modalidade");
+        cadastroModalidade.setMnemonic('M');
+        cadastro.add(cadastroModalidade);
 
+        bar.add(cadastro);
+    }
 
+    private void criarMenuModalidade() {
         modalidade = new JMenu("Modalidade");
-            modalidade.setMnemonic('m');
+        modalidade.setMnemonic('m');
 
-            jiujitsu = new JMenuItem("Jiu Jitsu");
-            jiujitsu.setMnemonic('j');
-            modalidade.add(jiujitsu);
+        jiujitsu = new JMenuItem("Jiu Jitsu");
+        jiujitsu.setMnemonic('j');
+        modalidade.add(jiujitsu);
 
-            karate = new JMenuItem("Karate");
-            karate.setMnemonic('k');
-            modalidade.add(karate);
+        karate = new JMenuItem("Karate");
+        karate.setMnemonic('k');
+        modalidade.add(karate);
+
+        bar.add(modalidade);
+    }
+
+    private void criarMenuAdmin() {
+        sistema = new JMenu("Sistema");
+        sistema.setMnemonic('S');
+
+        sistemaLogout = new JMenuItem(itemLogout);
+        sistemaLogout.setMnemonic('l');
+        sistema.add(sistemaLogout);
+
+        sistemaSair = new JMenuItem(itemSair);
+        sistemaSair.setMnemonic('a');
+        sistema.add(sistemaSair);
 
         horarios = new JMenu("Hor�rios");
-            horarios.setMnemonic('h');
+        horarios.setMnemonic('h');
 
-            matutino = new JMenuItem("Matutino");
-            matutino.setMnemonic('m');
-            horarios.add(matutino);
+        matutino = new JMenuItem("Matutino");
+        matutino.setMnemonic('m');
+        horarios.add(matutino);
 
-            vespertino = new JMenuItem("Vespertino");
-            vespertino.setMnemonic('v');
-            horarios.add(vespertino);
+        vespertino = new JMenuItem("Vespertino");
+        vespertino.setMnemonic('v');
+        horarios.add(vespertino);
 
-            noturno = new JMenuItem("Noturno");
-            noturno.setMnemonic('n');
-            horarios.add(noturno);
+        noturno = new JMenuItem("Noturno");
+        noturno.setMnemonic('n');
+        horarios.add(noturno);
 
 
         produtos = new JMenu("Produtos");
         produtos.setMnemonic('p');
 
-
         bar.add(sistema);
-        bar.add(cadastro);
-        bar.add(modalidade);
         bar.add(horarios);
         bar.add(produtos);
+    }
+
+    private void menuCriar() {
+        User user = ApplicationContext.getUser();
+
+        bar = new JMenuBar();
+
+        if (user.getTipo() == TipoUsuarioEnum.ADMINISTRADOR) {
+            criarMenuAdmin();
+            criarMenuCadastro();
+            criarMenuModalidade();
+        } else if (user.getTipo() == TipoUsuarioEnum.CADASTRAL) {
+            criarMenuCadastro();
+        } else if (user.getTipo() == TipoUsuarioEnum.FINANCEIRO) {
+            criarMenuModalidade();
+        }
 
         setJMenuBar(bar);
 

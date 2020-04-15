@@ -23,8 +23,6 @@ public class Login extends JDialog {
     private String senha;
     private Boolean opened = false;
 
-    private BiConsumer<String, String> onLoginFunction;
-
     public Login() {
         setTitle("Login - Academia Bombad�o");
         setSize(300, 160);
@@ -96,7 +94,11 @@ public class Login extends JDialog {
             }
 
             try {
-                onLoginFunction.accept(usuario, senha);
+                User user = User.login(usuario, senha);
+                if (user == null) {
+                    throw new RuntimeException("Erro ao fazer login.");
+                }
+                ApplicationContext.setUser(user);
                 toogle();
                 new MenuWindow().setVisible(true);
             } catch (Exception ex) {
@@ -115,11 +117,6 @@ public class Login extends JDialog {
             System.exit(EXIT_ON_CLOSE);
         }
     };
-
-    public Login onLogin(BiConsumer<String, String> function) {
-        onLoginFunction = function;
-        return this;
-    }
 
     public Login toogle() {
         opened = !opened;
