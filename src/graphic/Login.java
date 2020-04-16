@@ -1,4 +1,4 @@
-package pages;
+package graphic;
 
 import application.ApplicationContext;
 import models.user.User;
@@ -8,8 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 public class Login extends JDialog {
 
@@ -24,7 +22,7 @@ public class Login extends JDialog {
     private Boolean opened = false;
 
     public Login() {
-        setTitle("Login - Academia Bombad�o");
+        setTitle("Login - Academia");
         setSize(300, 160);
         setLayout(null);
         setResizable(false);
@@ -96,7 +94,7 @@ public class Login extends JDialog {
             try {
                 User user = User.login(usuario, senha);
                 if (user == null) {
-                    throw new RuntimeException("Erro ao fazer login.");
+                    throw new Exception("Erro ao fazer login.");
                 }
                 ApplicationContext.setUser(user);
                 toogle();

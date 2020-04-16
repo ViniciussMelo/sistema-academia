@@ -1,4 +1,4 @@
-package pages;
+package graphic;
 
 import application.ApplicationContext;
 import models.user.TipoUsuarioEnum;
@@ -41,22 +41,6 @@ public class MenuWindow extends JFrame {
         setTitle("Menu - Academia Braço Direito");
         setSize(800, 600);
         setLocationRelativeTo(null);
-        /*
-        if (tipo == TipoUsuarioEnum.ADMINISTRADOR) {
-            criarMenuSistena();
-            criarMenuCadastro();
-            criarMenuModalidade();
-            criarMenuHorarios();
-            criarMenuProdutos();
-        }
-
-        if (tipo == TipoUsuarioEnum.CADASTRAL) {
-            criarMenuCadastro();
-        }
-
-        if (tipo == TipoUsuarioEnum.FINANCEIRO) {
-            criarMenuModalidade();
-        }*/
 
         menuCriar();
 
