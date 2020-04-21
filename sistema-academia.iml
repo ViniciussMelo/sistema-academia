@@ -18,7 +18,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Hibernate 5.4.11-5.4.11" level="project" />
-    <orderEntry type="module" module-name="database" />
+    <orderEntry type="library" exported="" name="Hibernate 5.4.11-5.4.11" level="project" />
+    <orderEntry type="library" exported="" name="mysql:mysql-connector-java:5.1.42" level="project" />
   </component>
 </module>

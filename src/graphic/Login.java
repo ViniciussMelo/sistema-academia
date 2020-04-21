@@ -1,7 +1,7 @@
 package graphic;
 
 import application.ApplicationContext;
-import models.user.User;
+import database.models.user.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

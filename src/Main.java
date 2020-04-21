@@ -1,4 +1,4 @@
-import connection.HibernateUtil;
+import database.connection.HibernateUtil;
 import graphic.Login;
 
 public class Main {

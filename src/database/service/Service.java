@@ -1,6 +1,6 @@
-package service;
+package database.service;
 
-import connection.HibernateUtil;
+import database.connection.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

@@ -1,7 +1,7 @@
 package application;
 
 
-import models.user.User;
+import database.models.user.User;
 
 public class ApplicationContext {
     private static User user;

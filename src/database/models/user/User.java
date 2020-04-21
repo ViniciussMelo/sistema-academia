@@ -1,7 +1,7 @@
-package models.user;
+package database.models.user;
 
-import connection.HibernateUtil;
-import models.Model;
+import database.connection.HibernateUtil;
+import database.models.Model;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -19,6 +19,9 @@ public class User extends Model<User> implements Serializable {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "usuario")
+    private String usuario;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
@@ -58,5 +61,13 @@ public class User extends Model<User> implements Serializable {
 
     public void setTipo(TipoUsuarioEnum tipo) {
         this.tipo = tipo;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

@@ -1,10 +1,10 @@
-package connection;
+package database.connection;
 
-import models.user.TipoUsuarioEnum;
-import models.user.User;
+import database.models.user.TipoUsuarioEnum;
+import database.models.user.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import service.Service;
+import database.service.Service;
 
 import java.util.List;
 

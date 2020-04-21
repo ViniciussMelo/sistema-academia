@@ -1,4 +1,4 @@
-package models.user;
+package database.models.user;
 
 public enum TipoUsuarioEnum {
     ADMINISTRADOR,
