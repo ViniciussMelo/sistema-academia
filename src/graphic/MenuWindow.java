@@ -3,7 +3,7 @@ package graphic;
 import application.ApplicationContext;
 import database.models.user.TipoUsuarioEnum;
 import database.models.user.User;
-import graphic.usuario.Usuarios;
+import graphic.usuario.SistemaUsuarioWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -60,7 +60,7 @@ public class MenuWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    new Usuarios().setVisible(true);
+                    new SistemaUsuarioWindow().setVisible(true);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

@@ -2,7 +2,7 @@ package graphic.usuario;
 
 import database.models.user.User;
 import database.service.Service;
-import graphic.MenuWindow;
+import lib.Observer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Usuarios extends JDialog {
+public class SistemaUsuarioWindow extends JDialog implements Observer<User> {
 
     private JButton btnCadastro;
     private JTable tblUsuarios;
@@ -20,13 +20,13 @@ public class Usuarios extends JDialog {
 
     public static void main(String[] args) {
         try {
-            new Usuarios().setVisible(true);
+            new SistemaUsuarioWindow().setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Usuarios() throws IOException {
+    public SistemaUsuarioWindow() throws IOException {
         setTitle("Usuários");
         setSize(500, 400);
         setLayout(null);
@@ -58,7 +58,12 @@ public class Usuarios extends JDialog {
 
     private void configuraTabela() throws IOException {
         String[] colunas = {"ID", "Nome", "Usuario", "Tipo usuário"};
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
         for (int i = 0; i < colunas.length; i++) {
             modelo.addColumn(colunas[i]);
@@ -98,5 +103,10 @@ public class Usuarios extends JDialog {
         while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
+    }
+
+    @Override
+    public void update(User user) {
+        JOptionPane.showMessageDialog(null, user.getName());
     }
 }

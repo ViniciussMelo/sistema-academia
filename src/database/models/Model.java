@@ -7,11 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Model<T extends Model<T>> {
+public abstract class Model<T extends Model<T>> {
 
     @Id
     @GeneratedValue
     private Integer id;
+
+    public abstract String[] getResult();
 
     public T save() {
         Service<T> service = new Service<T>((Class<T>) this.getClass());

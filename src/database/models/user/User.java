@@ -70,4 +70,9 @@ public class User extends Model<User> implements Serializable {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+
+    @Override
+    public String[] getResult() {
+        return new String[]{getName(), getUsuario(), getTipo().name()};
+    }
 }
