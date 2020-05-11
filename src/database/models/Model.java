@@ -2,6 +2,7 @@ package database.models;
 
 import database.service.Service;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -12,6 +13,9 @@ public abstract class Model<T extends Model<T>> {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @Column(name = "active")
+    private Boolean active;
 
     public abstract String[] getResult();
 
@@ -37,5 +41,13 @@ public abstract class Model<T extends Model<T>> {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

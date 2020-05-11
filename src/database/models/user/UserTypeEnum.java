@@ -1,8 +1,9 @@
 package database.models.user;
 
-public enum TipoUsuarioEnum {
+public enum UserTypeEnum {
     ADMINISTRADOR,
     CADASTRAL,
     FINANCEIRO,
+    PROFESSOR,
     ;
 }

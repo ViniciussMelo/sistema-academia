@@ -1,7 +1,7 @@
 package graphic;
 
 import application.ApplicationContext;
-import database.models.user.TipoUsuarioEnum;
+import database.models.user.UserTypeEnum;
 import database.models.user.User;
 import graphic.usuario.SistemaUsuarioWindow;
 
@@ -134,13 +134,13 @@ public class MenuWindow extends JFrame {
 
         bar = new JMenuBar();
 
-        if (user.getTipo() == TipoUsuarioEnum.ADMINISTRADOR) {
+        if (user.getType() == UserTypeEnum.ADMINISTRADOR) {
             criarMenuAdmin();
             criarMenuCadastro();
             criarMenuModalidade();
-        } else if (user.getTipo() == TipoUsuarioEnum.CADASTRAL) {
+        } else if (user.getType() == UserTypeEnum.CADASTRAL) {
             criarMenuCadastro();
-        } else if (user.getTipo() == TipoUsuarioEnum.FINANCEIRO) {
+        } else if (user.getType() == UserTypeEnum.FINANCEIRO) {
             criarMenuModalidade();
         }
 

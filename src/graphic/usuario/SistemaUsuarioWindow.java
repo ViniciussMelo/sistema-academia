@@ -93,7 +93,7 @@ public class SistemaUsuarioWindow extends JDialog implements Observer<User> {
         List<User> allUsers = userService.findAll();
 
         for (User user : allUsers) {
-            modelo.addRow(new Object[]{user.getId(), user.getName(), user.getUsuario(), user.getTipo().name()});
+            modelo.addRow(new Object[]{user.getId(), user.getName(), user.getUsername(), user.getType().name()});
         }
     }
 

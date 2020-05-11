@@ -20,12 +20,12 @@ public class User extends Model<User> implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "usuario")
-    private String usuario;
+    @Column(name = "username")
+    private String username;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
-    private TipoUsuarioEnum tipo;
+    @Column(name = "type")
+    private UserTypeEnum type;
 
     public static User login(String nome, String senha) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -55,24 +55,24 @@ public class User extends Model<User> implements Serializable {
         this.password = password;
     }
 
-    public TipoUsuarioEnum getTipo() {
-        return tipo;
+    public UserTypeEnum getType() {
+        return type;
     }
 
-    public void setTipo(TipoUsuarioEnum tipo) {
-        this.tipo = tipo;
+    public void setType(UserTypeEnum type) {
+        this.type = type;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
     public String[] getResult() {
-        return new String[]{getName(), getUsuario(), getTipo().name()};
+        return new String[]{getName(), getUsername(), getType().name()};
     }
 }

@@ -82,12 +82,12 @@ public class Login extends JDialog {
 
 
             if (usuario.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Campo usu�rio obrigat�rio!");
+                JOptionPane.showMessageDialog(null, "Campo usuario obrigatorio!");
                 return;
             }
 
             if (senha.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Campo senha obrigat�rio!");
+                JOptionPane.showMessageDialog(null, "Campo senha obrigatorio!");
                 return;
             }
 

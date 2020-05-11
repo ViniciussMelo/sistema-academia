@@ -1,6 +1,6 @@
 package database.connection;
 
-import database.models.user.TipoUsuarioEnum;
+import database.models.user.UserTypeEnum;
 import database.models.user.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -34,19 +34,19 @@ public class HibernateUtil {
             User userAdmin = new User();
             userAdmin.setName("admin");
             userAdmin.setPassword("admin");
-            userAdmin.setTipo(TipoUsuarioEnum.ADMINISTRADOR);
+            userAdmin.setType(UserTypeEnum.ADMINISTRADOR);
             userAdmin.save();
 
             User userCadastral = new User();
             userCadastral.setName("user_cadastral");
             userCadastral.setPassword("cadastral");
-            userCadastral.setTipo(TipoUsuarioEnum.CADASTRAL);
+            userCadastral.setType(UserTypeEnum.CADASTRAL);
             userCadastral.save();
 
             User userFinanceiro = new User();
             userFinanceiro.setName("user_financeiro");
             userFinanceiro.setPassword("financeiro");
-            userFinanceiro.setTipo(TipoUsuarioEnum.FINANCEIRO);
+            userFinanceiro.setType(UserTypeEnum.FINANCEIRO);
             userFinanceiro.save();
         }
     }

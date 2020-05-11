@@ -1,14 +1,12 @@
 package graphic.usuario;
 
-import database.models.user.TipoUsuarioEnum;
+import database.models.user.UserTypeEnum;
 import database.models.user.User;
 import graphic.ConsultaGenericaWindow;
 import lib.Observer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.function.Function;
 
 public class Cadastro extends JDialog implements Observer<User> {
@@ -64,8 +62,8 @@ public class Cadastro extends JDialog implements Observer<User> {
         comboBoxTipoUsuario = new JComboBox();
         comboBoxTipoUsuario.setBounds(200, 65, 195, 25);
 
-        TipoUsuarioEnum[] values = TipoUsuarioEnum.values();
-        for (TipoUsuarioEnum value : values) {
+        UserTypeEnum[] values = UserTypeEnum.values();
+        for (UserTypeEnum value : values) {
             comboBoxTipoUsuario.addItem(value.name());
         }
 
@@ -127,9 +125,9 @@ public class Cadastro extends JDialog implements Observer<User> {
         }
 
         user.setName(nome);
-        user.setUsuario(usuario);
+        user.setUsername(usuario);
         user.setPassword(senha);
-        user.setTipo(TipoUsuarioEnum.valueOf(tipo));
+        user.setType(UserTypeEnum.valueOf(tipo));
         User userSaved = user.save();
 
         if (userSaved == null) {
@@ -177,10 +175,10 @@ public class Cadastro extends JDialog implements Observer<User> {
 
         fieldNome.setText(user.getName());
         fieldSenha.setText(user.getPassword());
-        fieldUsuario.setText(user.getUsuario());
+        fieldUsuario.setText(user.getUsername());
 
         ComboBoxModel model = comboBoxTipoUsuario.getModel();
-        model.setSelectedItem(user.getTipo().name());
+        model.setSelectedItem(user.getType().name());
         comboBoxTipoUsuario.setModel(model);
     }
 }
