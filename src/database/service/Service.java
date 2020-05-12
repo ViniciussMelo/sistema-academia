@@ -1,6 +1,7 @@
 package database.service;
 
 import database.connection.HibernateUtil;
+import database.models.Model;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -8,7 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-public class Service<T> {
+public class Service<T extends Model<T>> {
 
     private Class<T> entity;
 
@@ -41,7 +42,8 @@ public class Service<T> {
         try {
             transaction.begin();
             T load = find(id);
-            session.delete(load);
+            load.setActive(Boolean.FALSE);
+            load.save();
             transaction.commit();
             return Boolean.TRUE;
         } catch (Exception e) {

@@ -1,6 +1,9 @@
 package database.models;
 
 import database.service.Service;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -8,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
+@Where(clause = "active = 1")
 public abstract class Model<T extends Model<T>> {
 
     @Id
@@ -15,7 +19,7 @@ public abstract class Model<T extends Model<T>> {
     private Integer id;
 
     @Column(name = "active")
-    private Boolean active;
+    private Boolean active = Boolean.TRUE;
 
     public abstract String[] getResult();
 

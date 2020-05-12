@@ -22,7 +22,7 @@ public class Modality extends Model<Modality> {
     private BigDecimal value;
 
     @JoinTable(name = "modality_periods")
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Period> period;
 
     public User getTeacher() {

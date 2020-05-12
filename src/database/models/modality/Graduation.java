@@ -2,14 +2,12 @@ package database.models.modality;
 
 import database.models.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 @Entity(name = "graduation")
 public class Graduation extends Model<Graduation> {
 
+    @ManyToOne
     @JoinColumn(name = "modalityId", foreignKey = @ForeignKey(name = "graduation_modalityId"))
     private Modality modality;
 
