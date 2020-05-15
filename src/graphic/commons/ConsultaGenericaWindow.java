@@ -1,10 +1,9 @@
-package graphic;
+package graphic.commons;
 
 import database.models.Model;
 import database.models.user.User;
 import database.service.Service;
-import graphic.usuario.Cadastro;
-import graphic.usuario.SistemaUsuarioWindow;
+import graphic.user.UserForm;
 import lib.Observable;
 import lib.Observer;
 
@@ -14,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ConsultaGenericaWindow<T extends Model<T>> extends JDialog implements Observable {
@@ -30,7 +28,7 @@ public class ConsultaGenericaWindow<T extends Model<T>> extends JDialog implemen
     private List<T> allObjects;
 
     public static void main(String[] args) throws IOException {
-        ConsultaGenericaWindow<User> consulta = new ConsultaGenericaWindow<>(User.class, new Cadastro(), new String[]{"Nome", "Usuario", "Tipo"});
+        ConsultaGenericaWindow<User> consulta = new ConsultaGenericaWindow<>(User.class, new UserForm(), new String[]{"Nome", "Usuario", "Tipo"});
         consulta.open();
     }
 

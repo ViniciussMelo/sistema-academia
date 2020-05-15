@@ -1,13 +1,13 @@
-package graphic;
+package graphic.main;
 
 import application.ApplicationContext;
-import database.models.user.UserTypeEnum;
 import database.models.user.User;
-import graphic.usuario.SistemaUsuarioWindow;
+import database.models.user.UserTypeEnum;
+import graphic.authentication.Login;
+import graphic.user.UserForm;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
 public class MenuWindow extends JFrame {
 
@@ -59,17 +59,9 @@ public class MenuWindow extends JFrame {
         cadastroUsuario.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    new SistemaUsuarioWindow().setVisible(true);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                new UserForm().setVisible(true);
             }
         });
-
-        cadastroEmpresa = new JMenuItem("Empresa");
-        cadastroEmpresa.setMnemonic('E');
-        cadastro.add(cadastroEmpresa);
 
         cadastroModalidade = new JMenuItem("Modalidade");
         cadastroModalidade.setMnemonic('M');

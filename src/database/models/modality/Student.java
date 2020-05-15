@@ -6,7 +6,7 @@ import database.models.address.Address;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "student")
+@Entity(name = "students")
 public class Student extends Model<Student> {
 
     @Column(name = "name")

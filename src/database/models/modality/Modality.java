@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Entity(name = "modality")
+@Entity(name = "modalities")
 public class Modality extends Model<Modality> {
 
     @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "modality_userId"))

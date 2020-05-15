@@ -7,7 +7,9 @@ import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Map;
 
 public class Service<T extends Model<T>> {
 
@@ -73,14 +75,31 @@ public class Service<T extends Model<T>> {
         }
     }
 
+    public List<T> findAllAndFilter(final Map<String, Object> columns) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(this.entity);
+        Root<T> root = criteria.from(this.entity);
+
+        if (columns != null && !columns.isEmpty()) {
+            columns.forEach((column, value) -> {
+                criteria.where(builder.like(root.get(column), "%" + (String) value + "%"));
+            });
+        }
+
+        List<T> data = session.createQuery(criteria).getResultList();
+        session.close();
+        return data;
+    }
 
     public List<T> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(this.entity);
-        criteria.from(this.entity);
+        Root<T> root = criteria.from(this.entity);
         List<T> data = session.createQuery(criteria).getResultList();
         session.close();
         return data;
     }
+
 }

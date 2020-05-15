@@ -1,5 +1,5 @@
 import database.connection.HibernateUtil;
-import graphic.Login;
+import graphic.authentication.Login;
 
 public class Main {
 

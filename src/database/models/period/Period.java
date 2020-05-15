@@ -5,7 +5,7 @@ import database.models.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity(name = "period")
+@Entity(name = "periods")
 public class Period extends Model<Period> {
 
     @Column(name = "description")

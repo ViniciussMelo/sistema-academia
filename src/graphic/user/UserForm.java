@@ -1,15 +1,14 @@
-package graphic.usuario;
+package graphic.user;
 
-import database.models.user.UserTypeEnum;
 import database.models.user.User;
-import graphic.ConsultaGenericaWindow;
+import database.models.user.UserTypeEnum;
+import graphic.commons.ConsultaGenericaWindow;
 import lib.Observer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.function.Function;
 
-public class Cadastro extends JDialog implements Observer<User> {
+public class UserForm extends JDialog implements Observer<User> {
 
     JTextField fieldNome, fieldUsuario, fieldSenha;
     JLabel lbldNome, lblUsuario, lblSenha, lblTipo;
@@ -20,13 +19,7 @@ public class Cadastro extends JDialog implements Observer<User> {
 
     private User user;
 
-    private Function onClose;
-
-    public static void main(String[] args) {
-        new Cadastro().setVisible(true);
-    }
-
-    public Cadastro() {
+    public UserForm() {
         setTitle("Usuario");
         setSize(400, 200);
         setLayout(null);
@@ -76,7 +69,7 @@ public class Cadastro extends JDialog implements Observer<User> {
             }
         });
 
-        Cadastro instance = this;
+        UserForm instance = this;
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBounds(105, 100, 100, 25);
         btnBuscar.addActionListener(new AbstractAction() {
@@ -163,10 +156,6 @@ public class Cadastro extends JDialog implements Observer<User> {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void setOnClose(Function onClose) {
-        this.onClose = onClose;
     }
 
     @Override

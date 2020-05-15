@@ -4,7 +4,7 @@ import database.models.Model;
 
 import javax.persistence.*;
 
-@Entity(name = "graduation")
+@Entity(name = "graduations")
 public class Graduation extends Model<Graduation> {
 
     @ManyToOne

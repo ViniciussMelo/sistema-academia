@@ -32,13 +32,15 @@ public class HibernateUtil {
 
         if (allUsers.size() == 0) {
             User userAdmin = new User();
-            userAdmin.setName("admin");
+            userAdmin.setUsername("admin");
+            userAdmin.setName("Administrador");
             userAdmin.setPassword("admin");
             userAdmin.setType(UserTypeEnum.ADMINISTRADOR);
             userAdmin.save();
 
             User userCadastral = new User();
-            userCadastral.setName("user_cadastral");
+            userCadastral.setUsername("user_cadastral");
+            userCadastral.setName("Cadastral");
             userCadastral.setPassword("cadastral");
             userCadastral.setType(UserTypeEnum.CADASTRAL);
             userCadastral.save();
