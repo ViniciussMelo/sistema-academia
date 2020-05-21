@@ -61,4 +61,9 @@ public class Modality extends Model<Modality> {
     public String[] getResult() {
         return new String[0];
     }
+
+    @Override
+    public List<Modality> filter(String value) {
+        return null;
+    }
 }

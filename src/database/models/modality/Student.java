@@ -58,4 +58,9 @@ public class Student extends Model<Student> {
     public String[] getResult() {
         return new String[0];
     }
+
+    @Override
+    public List<Student> filter(String value) {
+        return null;
+    }
 }

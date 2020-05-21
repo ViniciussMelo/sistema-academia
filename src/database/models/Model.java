@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.util.List;
 
 @MappedSuperclass
 @Where(clause = "active = 1")
@@ -22,6 +23,8 @@ public abstract class Model<T extends Model<T>> {
     private Boolean active = Boolean.TRUE;
 
     public abstract String[] getResult();
+
+    public abstract List<T> filter(String value);
 
     public T save() {
         Service<T> service = new Service<T>((Class<T>) this.getClass());
