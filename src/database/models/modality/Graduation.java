@@ -9,7 +9,7 @@ import java.util.List;
 public class Graduation extends Model<Graduation> {
 
     @ManyToOne
-    @JoinColumn(name = "modalityId", foreignKey = @ForeignKey(name = "graduation_modalityId"))
+    @JoinColumn(name = "modality_id", foreignKey = @ForeignKey(name = "graduation_modality_id"))
     private Modality modality;
 
     @Column(name = "description")
