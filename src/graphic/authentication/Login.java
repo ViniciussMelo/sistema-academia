@@ -1,7 +1,8 @@
-package graphic;
+package graphic.authentication;
 
 import application.ApplicationContext;
 import database.models.user.User;
+import graphic.main.MenuWindow;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Entity(name = "modality")
+@Entity(name = "modalities")
 public class Modality extends Model<Modality> {
 
     @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "modality_userId"))
@@ -22,7 +22,7 @@ public class Modality extends Model<Modality> {
     private BigDecimal value;
 
     @JoinTable(name = "modality_periods")
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Period> period;
 
     public User getTeacher() {
@@ -60,5 +60,10 @@ public class Modality extends Model<Modality> {
     @Override
     public String[] getResult() {
         return new String[0];
+    }
+
+    @Override
+    public List<Modality> filter(String value) {
+        return null;
     }
 }

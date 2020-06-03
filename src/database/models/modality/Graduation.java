@@ -2,14 +2,13 @@ package database.models.modality;
 
 import database.models.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
+import java.util.List;
 
-@Entity(name = "graduation")
+@Entity(name = "graduations")
 public class Graduation extends Model<Graduation> {
 
+    @ManyToOne
     @JoinColumn(name = "modalityId", foreignKey = @ForeignKey(name = "graduation_modalityId"))
     private Modality modality;
 
@@ -35,6 +34,11 @@ public class Graduation extends Model<Graduation> {
     @Override
     public String[] getResult() {
         return new String[0];
+    }
+
+    @Override
+    public List<Graduation> filter(String value) {
+        return null;
     }
 
 }

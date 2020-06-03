@@ -13,5 +13,10 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="database.models.user.User"/>
+        <mapping class="database.models.address.Address"/>
+        <mapping class="database.models.modality.Graduation"/>
+        <mapping class="database.models.modality.Modality"/>
+        <mapping class="database.models.modality.Student"/>
+        <mapping class="database.models.period.Period"/>
     </session-factory>
 </hibernate-configuration>

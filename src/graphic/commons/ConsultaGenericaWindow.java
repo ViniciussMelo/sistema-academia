@@ -1,10 +1,9 @@
-package graphic;
+package graphic.commons;
 
 import database.models.Model;
 import database.models.user.User;
 import database.service.Service;
-import graphic.usuario.Cadastro;
-import graphic.usuario.SistemaUsuarioWindow;
+import graphic.user.UserForm;
 import lib.Observable;
 import lib.Observer;
 
@@ -13,24 +12,26 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ConsultaGenericaWindow<T extends Model<T>> extends JDialog implements Observable {
     private JScrollPane scroll;
     private JTable table;
+    private JTextField fieldFilter;
     private DefaultTableModel model;
 
     private Service<T> service;
     private List<Observer> observers;
 
-    private JButton buttonOk;
+    private JButton buttonOk, buttonFilter;
 
     private List<T> allObjects;
 
     public static void main(String[] args) throws IOException {
-        ConsultaGenericaWindow<User> consulta = new ConsultaGenericaWindow<>(User.class, new Cadastro(), new String[]{"Nome", "Usuario", "Tipo"});
+        ConsultaGenericaWindow<User> consulta = new ConsultaGenericaWindow<>(User.class, new UserForm(), new String[]{"Nome", "Usuario", "Tipo"});
         consulta.open();
     }
 
@@ -59,9 +60,34 @@ public class ConsultaGenericaWindow<T extends Model<T>> extends JDialog implemen
         setModal(true);
         setLocationRelativeTo(null);
 
+        fieldFilter = new JTextField();
+        fieldFilter.setBounds(5, 5, 400, 30);
+
+        buttonFilter = new JButton("Buscar");
+        buttonFilter.setBounds(410, 5, 80, 30);
+        buttonFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    clearRows();
+
+                    Constructor<T> constructor = clazz.getDeclaredConstructor();
+                    T instance = constructor.newInstance(null);
+
+                    List<T> list = instance.filter(fieldFilter.getText());
+
+                    for (T t : list) {
+                        model.addRow(t.getResult());
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         table = new JTable(model);
         scroll = new JScrollPane(table);
-        scroll.setBounds(0, 0, 500, 300);
+        scroll.setBounds(0, 40, 500, 260);
 
         buttonOk = new JButton("Ok");
         buttonOk.setBounds(0, 305, 100, 25);
@@ -74,6 +100,8 @@ public class ConsultaGenericaWindow<T extends Model<T>> extends JDialog implemen
 
         getContentPane().add(scroll);
         getContentPane().add(buttonOk);
+        getContentPane().add(fieldFilter);
+        getContentPane().add(buttonFilter);
     }
 
     private void buscarDados() {
@@ -89,10 +117,15 @@ public class ConsultaGenericaWindow<T extends Model<T>> extends JDialog implemen
         }
     }
 
-
     public void open() {
         buscarDados();
         setVisible(true);
+    }
+
+    public void clearRows(){
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
     }
 
     @Override
@@ -118,3 +151,4 @@ public class ConsultaGenericaWindow<T extends Model<T>> extends JDialog implemen
         setVisible(false);
     }
 }
+

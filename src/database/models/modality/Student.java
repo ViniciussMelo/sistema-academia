@@ -6,7 +6,7 @@ import database.models.address.Address;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "student")
+@Entity(name = "students")
 public class Student extends Model<Student> {
 
     @Column(name = "name")
@@ -57,5 +57,10 @@ public class Student extends Model<Student> {
     @Override
     public String[] getResult() {
         return new String[0];
+    }
+
+    @Override
+    public List<Student> filter(String value) {
+        return null;
     }
 }
