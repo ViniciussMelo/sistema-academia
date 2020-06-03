@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "payment")
 public class Payment extends Model<Payment> {
@@ -70,5 +71,10 @@ public class Payment extends Model<Payment> {
     @Override
     public String[] getResult() {
         return new String[0];
+    }
+
+    @Override
+    public List<Payment> filter(String value) {
+        return null;
     }
 }
