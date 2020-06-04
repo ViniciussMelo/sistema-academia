@@ -17,9 +17,9 @@ public class CitySeeder implements Seeder {
     @Override
     public void run() {
         Service<City> cityService = new Service<City>(City.class);
-        City city = cityService.find(1);
+        Long count = cityService.count();
 
-        if (city != null) {
+        if (count.intValue() > 0) {
             return;
         }
 

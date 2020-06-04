@@ -19,12 +19,11 @@ public class StateSeeder implements Seeder {
     @Override
     public void run() {
         Service<State> stateService = new Service<State>(State.class);
-        State state = stateService.find(1);
+        Long count = stateService.count();
 
-        if (state != null) {
+        if (count.intValue() > 0) {
             return;
         }
-
 
         System.out.println("[Seeder] StateSeeder running.");
         try {
