@@ -4,6 +4,7 @@ import application.ApplicationContext;
 import database.models.user.User;
 import database.models.user.UserTypeEnum;
 import graphic.authentication.Login;
+import graphic.student.StudentForm;
 import graphic.user.UserForm;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class MenuWindow extends JFrame {
     private JMenuItem cadastroUsuario;
     private JMenuItem cadastroEmpresa;
     private JMenuItem cadastroModalidade;
+    private JMenuItem cadastroAluno;
 
     private JMenu modalidade;
     private JMenuItem jiujitsu;
@@ -66,6 +68,16 @@ public class MenuWindow extends JFrame {
         cadastroModalidade = new JMenuItem("Modalidade");
         cadastroModalidade.setMnemonic('M');
         cadastro.add(cadastroModalidade);
+
+        cadastroAluno = new JMenuItem("Aluno");
+        cadastroAluno.setMnemonic('A');
+        cadastro.add(cadastroAluno);
+        cadastroAluno.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new StudentForm().setVisible(true);
+            }
+        });
 
         bar.add(cadastro);
     }
