@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -29,11 +30,11 @@ public class StudentForm extends JDialog implements Observer<Student> {
     private JTextField fieldNeighorhood;
     private JTextField fieldStreet;
     private JTable tblModalities;
-    private JPanel lblName;
     private JTextField fieldBirthDate;
     private JButton btnConsultar;
+    private JButton btnDeletar;
 
-    private Student student = new Student();
+    private Student student;
     private List<State> states;
     private List<City> cities;
     private DefaultTableModel tblModel;
@@ -105,6 +106,20 @@ public class StudentForm extends JDialog implements Observer<Student> {
                 new ConsultaGenericaWindow<Student>(Student.class, instance, new String[]{"Nome", "Telefone", "Ativo"}).open();
             }
         });
+
+        btnDeletar.setEnabled(Boolean.FALSE);
+        btnDeletar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (student != null && student.getId() != null) {
+                    student.delete();
+                    JOptionPane.showMessageDialog(null, "Aluno deletado com sucesso!");
+                    student = null;
+                    btnDeletar.setEnabled(Boolean.FALSE);
+                    clear();
+                }
+            }
+        });
     }
 
     private void setContents() {
@@ -131,12 +146,46 @@ public class StudentForm extends JDialog implements Observer<Student> {
     }
 
     private void onOK() {
-        // add your code here
-        dispose();
+        Address address = new Address();
+        student = new Student();
+
+        String name = fieldName.getText();
+        String telephone = fieldTelephone.getText();
+        String birthDate = fieldBirthDate.getText();
+        String street = fieldStreet.getText();
+        String neighorhood = fieldNeighorhood.getText();
+        int citySelectedIndex = comboCity.getSelectedIndex();
+        int stateSelectedIndex = comboState.getSelectedIndex();
+
+        student.setAddress(address);
+
+        if (stateSelectedIndex > 0) {
+            State state = states.get(stateSelectedIndex - 1);
+            address.setState(state);
+        }
+
+        if (citySelectedIndex > 0) {
+            City city = cities.get(citySelectedIndex - 1);
+            address.setCity(city);
+        }
+
+        student.setName(name);
+        student.setTelephone(telephone);
+        student.setBirthDate(birthDate != null ? LocalDate.parse(birthDate) : null);
+        address.setStreet(street);
+        address.setNeighborhood(neighorhood);
+
+        student.save();
+
+        student = null;
+
+        clear();
+
+        JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso!");
+        //dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
@@ -150,12 +199,42 @@ public class StudentForm extends JDialog implements Observer<Student> {
     @Override
     public void update(Student student) {
         setStudent(student);
+        btnDeletar.setEnabled(Boolean.TRUE);
 
         Address address = student.getAddress();
 
         fieldName.setText(student.getName());
         fieldTelephone.setText(student.getTelephone());
-        fieldBirthDate.setText(student.getBirthDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        fieldBirthDate.setText(student.getBirthDate() != null ? student.getBirthDate().format(DateTimeFormatter.ISO_LOCAL_DATE) : "");
+
+        if (address != null) {
+            City city = address.getCity();
+            State state = address.getState();
+
+            if (state != null) {
+                comboState.setSelectedItem(state.getName());
+                loadCities(state);
+            }
+
+            if (city != null) {
+                comboCity.setSelectedItem(city.getName());
+            }
+
+            fieldStreet.setText(address.getStreet());
+            fieldNeighorhood.setText(address.getNeighborhood());
+        }
+    }
+
+    public void clear(){
+        fieldName.setText(null);
+        fieldTelephone.setText(null);
+        fieldBirthDate.setText(null);
+        fieldStreet.setText(null);
+        fieldNeighorhood.setText(null);
+        comboState.setSelectedIndex(0);
+        comboCity.setSelectedIndex(0);
+        comboCity.addItem("Selecione uma cidade.");
+        comboState.addItem("Selecione um estado");
     }
 
     public void setStudent(Student student) {
