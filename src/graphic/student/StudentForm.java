@@ -44,6 +44,7 @@ public class StudentForm extends JDialog implements Observer<Student> {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 500);
+        setLocationRelativeTo(null);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
