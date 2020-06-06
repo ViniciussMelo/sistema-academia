@@ -1,16 +1,19 @@
 package database.connection;
 
-import database.models.user.UserTypeEnum;
-import database.models.user.User;
+import database.seeders.CitySeeder;
+import database.seeders.Seeder;
+import database.seeders.StateSeeder;
+import database.seeders.UserSeeder;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import database.service.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
+    private static List<Seeder> seeders = Arrays.asList(new UserSeeder(), new StateSeeder(), new CitySeeder());
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -26,30 +29,7 @@ public class HibernateUtil {
         getSessionFactory();
     }
 
-    public static void migrate() {
-        Service<User> userService = new Service<>(User.class);
-        List<User> allUsers = userService.findAll();
-
-        if (allUsers.size() == 0) {
-            User userAdmin = new User();
-            userAdmin.setUsername("admin");
-            userAdmin.setName("Administrador");
-            userAdmin.setPassword("admin");
-            userAdmin.setType(UserTypeEnum.ADMINISTRADOR);
-            userAdmin.save();
-
-            User userCadastral = new User();
-            userCadastral.setUsername("user_cadastral");
-            userCadastral.setName("Cadastral");
-            userCadastral.setPassword("cadastral");
-            userCadastral.setType(UserTypeEnum.CADASTRAL);
-            userCadastral.save();
-
-            User userFinanceiro = new User();
-            userFinanceiro.setName("user_financeiro");
-            userFinanceiro.setPassword("financeiro");
-            userFinanceiro.setType(UserTypeEnum.FINANCEIRO);
-            userFinanceiro.save();
-        }
+    public static void runSeeders() {
+        seeders.forEach(Seeder::run);
     }
 }

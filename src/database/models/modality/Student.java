@@ -4,6 +4,7 @@ import database.models.Model;
 import database.models.address.Address;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity(name = "students")
@@ -19,8 +20,11 @@ public class Student extends Model<Student> {
     @Embedded
     private Address address;
 
-    @Column(name = "telephone")
+    @Column
     private String telephone;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     public String getName() {
         return name;
@@ -54,9 +58,21 @@ public class Student extends Model<Student> {
         this.telephone = telephone;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getActiveText() {
+        return getActive() ? "Sim" : "Não";
+    }
+
     @Override
     public String[] getResult() {
-        return new String[0];
+        return new String[]{getName(), getTelephone(), getActiveText()};
     }
 
     @Override

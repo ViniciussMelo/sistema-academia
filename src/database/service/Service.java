@@ -2,8 +2,10 @@ package database.service;
 
 import database.connection.HibernateUtil;
 import database.models.Model;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -100,6 +102,14 @@ public class Service<T extends Model<T>> {
         List<T> data = session.createQuery(criteria).getResultList();
         session.close();
         return data;
+    }
+
+    public Long count() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder qb = session.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(entity)));
+        return session.createQuery(cq).getSingleResult();
     }
 
 }
