@@ -5,6 +5,7 @@ import database.models.address.Address;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "students")
@@ -13,9 +14,11 @@ public class Student extends Model<Student> {
     @Column(name = "name")
     private String name;
 
-    @JoinTable(name = "student_modalities")
-    @ManyToMany
-    private List<Modality> modalities;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "student_modalities",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "modality_id")})
+    private List<Modality> modalities = new ArrayList<>();
 
     @Embedded
     private Address address;

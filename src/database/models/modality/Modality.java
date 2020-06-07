@@ -6,12 +6,13 @@ import database.models.user.User;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "modalities")
 public class Modality extends Model<Modality> {
 
-    @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "modality_userId"))
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "modality_userId"))
     @ManyToOne
     private User teacher;
 
@@ -21,9 +22,9 @@ public class Modality extends Model<Modality> {
     @Column(name = "value")
     private BigDecimal value;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "modality_periods")
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Period> period;
+    private List<Period> period = new ArrayList<>();
 
     public User getTeacher() {
         return teacher;

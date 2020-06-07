@@ -3,8 +3,8 @@ package graphic.student;
 import database.models.address.Address;
 import database.models.address.City;
 import database.models.address.State;
+import database.models.modality.Modality;
 import database.models.modality.Student;
-import database.models.user.User;
 import database.service.CityService;
 import database.service.Service;
 import graphic.commons.ConsultaGenericaWindow;
@@ -12,8 +12,6 @@ import lib.Observer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,10 +31,12 @@ public class StudentForm extends JDialog implements Observer<Student> {
     private JTextField fieldBirthDate;
     private JButton btnConsultar;
     private JButton btnDeletar;
+    private JButton consultarModalidadesButton;
 
-    private Student student;
+    private Student student = new Student();
     private List<State> states;
     private List<City> cities;
+    private List<Modality> selectedModalities;
     private DefaultTableModel tblModel;
 
     public StudentForm() {
@@ -121,6 +121,18 @@ public class StudentForm extends JDialog implements Observer<Student> {
                 }
             }
         });
+
+        consultarModalidadesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StudentModalitiesDialog
+                        .open(modalities -> {
+                            selectedModalities = modalities;
+                            addModalitiesInTable(modalities);
+                            return null;
+                        });
+            }
+        });
     }
 
     private void setContents() {
@@ -148,7 +160,6 @@ public class StudentForm extends JDialog implements Observer<Student> {
 
     private void onOK() {
         Address address = new Address();
-        student = new Student();
 
         String name = fieldName.getText();
         String telephone = fieldTelephone.getText();
@@ -168,6 +179,11 @@ public class StudentForm extends JDialog implements Observer<Student> {
         if (citySelectedIndex > 0) {
             City city = cities.get(citySelectedIndex - 1);
             address.setCity(city);
+        }
+
+        if (selectedModalities != null) {
+            List<Modality> modalities = student.getModalities();
+            modalities.addAll(selectedModalities);
         }
 
         student.setName(name);
@@ -190,6 +206,12 @@ public class StudentForm extends JDialog implements Observer<Student> {
         dispose();
     }
 
+    private void deleteRowsTableModalities() {
+        for (int i = tblModel.getRowCount() - 1; i >= 0; i--) {
+            tblModel.removeRow(i);
+        }
+    }
+
     public static void main(String[] args) {
         StudentForm dialog = new StudentForm();
         dialog.pack();
@@ -200,6 +222,8 @@ public class StudentForm extends JDialog implements Observer<Student> {
     @Override
     public void update(Student student) {
         setStudent(student);
+        deleteRowsTableModalities();
+        addModalitiesInTable(student.getModalities());
         btnDeletar.setEnabled(Boolean.TRUE);
 
         Address address = student.getAddress();
@@ -226,7 +250,13 @@ public class StudentForm extends JDialog implements Observer<Student> {
         }
     }
 
-    public void clear(){
+    public void addModalitiesInTable(List<Modality> modalities) {
+        for (Modality modality : modalities) {
+            tblModel.addRow(new String[]{modality.getDescription(), modality.getValue().toString()});
+        }
+    }
+
+    public void clear() {
         fieldName.setText(null);
         fieldTelephone.setText(null);
         fieldBirthDate.setText(null);
@@ -236,6 +266,7 @@ public class StudentForm extends JDialog implements Observer<Student> {
         comboCity.setSelectedIndex(0);
         comboCity.addItem("Selecione uma cidade.");
         comboState.addItem("Selecione um estado");
+        deleteRowsTableModalities();
     }
 
     public void setStudent(Student student) {
