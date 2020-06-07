@@ -22,6 +22,7 @@ public class MenuWindow extends JFrame {
     private JMenuItem cadastroEmpresa;
     private JMenuItem cadastroModalidade;
     private JMenuItem cadastroAluno;
+    private JMenuItem cadastroPeriodo;
 
     private JMenu modalidade;
     private JMenuItem jiujitsu;
@@ -73,6 +74,16 @@ public class MenuWindow extends JFrame {
         cadastroAluno.setMnemonic('A');
         cadastro.add(cadastroAluno);
         cadastroAluno.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new StudentForm().setVisible(true);
+            }
+        });
+
+        cadastroPeriodo = new JMenuItem("Periodo");
+        cadastroPeriodo.setMnemonic('P');
+        cadastro.add(cadastroPeriodo);
+        cadastroPeriodo.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new StudentForm().setVisible(true);

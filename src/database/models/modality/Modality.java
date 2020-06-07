@@ -22,8 +22,10 @@ public class Modality extends Model<Modality> {
     @Column(name = "value")
     private BigDecimal value;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "modality_periods")
+    @JoinTable(name = "modalities_periods",
+            joinColumns = {@JoinColumn(name = "modality_id")},
+            inverseJoinColumns = {@JoinColumn(name = "period_id")})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Period> period = new ArrayList<>();
 
     public User getTeacher() {
