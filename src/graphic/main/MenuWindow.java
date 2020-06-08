@@ -4,6 +4,7 @@ import application.ApplicationContext;
 import database.models.user.User;
 import database.models.user.UserTypeEnum;
 import graphic.authentication.Login;
+import graphic.modality.ModalityForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
 
@@ -28,9 +29,7 @@ public class MenuWindow extends JFrame {
     private JMenuItem karate;
 
     private JMenu horarios;
-    private JMenuItem matutino;
-    private JMenuItem vespertino;
-    private JMenuItem noturno;
+    private JMenuItem cadastroHorario;
 
     private JMenu produtos;
 
@@ -68,6 +67,12 @@ public class MenuWindow extends JFrame {
         cadastroModalidade = new JMenuItem("Modalidade");
         cadastroModalidade.setMnemonic('M');
         cadastro.add(cadastroModalidade);
+        cadastroModalidade.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ModalityForm().setVisible(true);
+            }
+        });
 
         cadastroAluno = new JMenuItem("Aluno");
         cadastroAluno.setMnemonic('A');
@@ -109,21 +114,18 @@ public class MenuWindow extends JFrame {
         sistemaSair.setMnemonic('a');
         sistema.add(sistemaSair);
 
-        horarios = new JMenu("Hor�rios");
+        horarios = new JMenu("Horarios");
         horarios.setMnemonic('h');
 
-        matutino = new JMenuItem("Matutino");
-        matutino.setMnemonic('m');
-        horarios.add(matutino);
-
-        vespertino = new JMenuItem("Vespertino");
-        vespertino.setMnemonic('v');
-        horarios.add(vespertino);
-
-        noturno = new JMenuItem("Noturno");
-        noturno.setMnemonic('n');
-        horarios.add(noturno);
-
+        cadastroHorario = new JMenuItem("Cadastro");
+        cadastroHorario.setMnemonic('C');
+        horarios.add(cadastroHorario);
+        cadastroHorario.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //new PeriodForm().setVisible(true);
+            }
+        });
 
         produtos = new JMenu("Produtos");
         produtos.setMnemonic('p');
