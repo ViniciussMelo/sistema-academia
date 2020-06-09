@@ -6,20 +6,27 @@ import lib.Observer;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class PeriodForm extends JDialog implements Observer<Period> {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField fieldInitTime;
+    private JTextField fieldIEndTime;
+    private JTextField fieldDescription;
     private JButton consultarPeriodosButton;
+    private JButton deletarPeriodoButton;
+
+    private Period period = new Period();
 
     public PeriodForm() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setSize(400, 350);
+        setLocationRelativeTo(null);
         PeriodForm instance = this;
 
         buttonOK.addActionListener(new ActionListener() {
@@ -55,11 +62,29 @@ public class PeriodForm extends JDialog implements Observer<Period> {
                 new ConsultaGenericaWindow<>(Period.class, instance, new String[]{"Descrição", "Hora inicial", "Hora final"}).open();
             }
         });
+
+        deletarPeriodoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (period != null && period.getId() != null) {
+                    period.delete();
+                }
+            }
+        });
+        deletarPeriodoButton.setEnabled(false);
     }
 
     private void onOK() {
-        // add your code here
-        dispose();
+        String description = fieldDescription.getText();
+        String endTime = fieldIEndTime.getText();
+        String initTime = fieldIEndTime.getText();
+
+        period.setEndTime(LocalTime.parse(endTime));
+        period.setInitTime(LocalTime.parse(initTime));
+        period.setDescription(description);
+        period.save();
+
+        // dispose();
     }
 
     private void onCancel() {
@@ -76,6 +101,10 @@ public class PeriodForm extends JDialog implements Observer<Period> {
 
     @Override
     public void update(Period o) {
-
+        period = o;
+        fieldDescription.setText(o.getDescription());
+        fieldInitTime.setText(o.getInitTime().format(DateTimeFormatter.ISO_TIME));
+        fieldIEndTime.setText(o.getEndTime().format(DateTimeFormatter.ISO_TIME));
+        deletarPeriodoButton.setEnabled(true);
     }
 }

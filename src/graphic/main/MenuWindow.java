@@ -4,6 +4,7 @@ import application.ApplicationContext;
 import database.models.user.User;
 import database.models.user.UserTypeEnum;
 import graphic.authentication.Login;
+import graphic.period.PeriodForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
 
@@ -86,7 +87,7 @@ public class MenuWindow extends JFrame {
         cadastroPeriodo.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new StudentForm().setVisible(true);
+                new PeriodForm().setVisible(true);
             }
         });
 
