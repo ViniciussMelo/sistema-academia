@@ -3,7 +3,7 @@
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="436" height="351"/>
+      <xy x="48" y="54" width="436" height="387"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -56,7 +56,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="1c17d" class="javax.swing.JTable" binding="table1" default-binding="true">
+          <component id="1c17d" class="javax.swing.JTable" binding="tblTeacher">
             <constraints/>
             <properties/>
           </component>
@@ -69,7 +69,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="84c77" class="javax.swing.JTable" binding="table2" default-binding="true">
+          <component id="84c77" class="javax.swing.JTable" binding="tblperiod" default-binding="true">
             <constraints/>
             <properties/>
           </component>
@@ -121,7 +121,11 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="true"/>
+          <verifyInputWhenFocusTarget value="false"/>
+          <visible value="true"/>
+        </properties>
       </component>
       <component id="c5172" class="javax.swing.JButton" binding="btnDeleteTeacher">
         <constraints>
