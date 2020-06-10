@@ -6,10 +6,12 @@ import database.models.modality.Modality;
 import database.models.modality.Student;
 import database.models.user.User;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +35,6 @@ public class Payment extends Model<Payment> {
     private BigDecimal amount_paid;
 
     public static BigDecimal totalValueModalities(Student student){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
         List<Modality> modalities = student.getModalities();
         BigDecimal valueAmount = BigDecimal.ZERO;
 
@@ -43,6 +43,34 @@ public class Payment extends Model<Payment> {
         }
 
         return valueAmount;
+    }
+
+    public static List<Payment> paymentStatusOpen(Integer codStudent){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Payment> payment;
+
+        Query query = session.createQuery("SELECT p FROM database.models.payment.Payment as p " +
+                                            "inner join p.student as student "+
+                                            "WHERE p.amount > p.amount_paid and (student.id =:codStudent or 0 =:codStudent) ");
+        query.setParameter("codStudent", codStudent);
+        payment = query.getResultList();
+        session.close();
+
+        return payment;
+    }
+
+    public static List<Payment> paymentStatusPaid(Integer codStudent){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Payment> payment;
+
+        Query query = session.createQuery("SELECT p FROM database.models.payment.Payment as p " +
+                                            "inner join p.student as student "+
+                                            "WHERE p.amount = p.amount_paid and (student.id =:codStudent or 0 =:codStudent) ");
+        query.setParameter("codStudent", codStudent);
+        payment = query.getResultList();
+        session.close();
+
+        return payment;
     }
 
     public LocalDate getReference_month() {

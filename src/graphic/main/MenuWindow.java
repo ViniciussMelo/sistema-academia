@@ -5,6 +5,7 @@ import database.models.user.User;
 import database.models.user.UserTypeEnum;
 import graphic.authentication.Login;
 import graphic.modality.ModalityForm;
+import graphic.payment.PaymentConsultForm;
 import graphic.payment.PaymentForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
@@ -34,6 +35,7 @@ public class MenuWindow extends JFrame {
 
     private JMenu mensalidade;
     private JMenuItem cadastrarMensalidade;
+    private JMenuItem consultarMensalidade;
 
     private JMenu produtos;
 
@@ -91,21 +93,6 @@ public class MenuWindow extends JFrame {
         bar.add(cadastro);
     }
 
-    private void criarMenuModalidade() {
-        modalidade = new JMenu("Modalidade");
-        modalidade.setMnemonic('m');
-
-        jiujitsu = new JMenuItem("Jiu Jitsu");
-        jiujitsu.setMnemonic('j');
-        modalidade.add(jiujitsu);
-
-        karate = new JMenuItem("Karate");
-        karate.setMnemonic('k');
-        modalidade.add(karate);
-
-        bar.add(modalidade);
-    }
-
     private void criarMenuMensalidade(){
         mensalidade = new JMenu("Mensalidade");
         mensalidade.setMnemonic('e');
@@ -119,7 +106,17 @@ public class MenuWindow extends JFrame {
             }
         });
 
+        consultarMensalidade = new JMenuItem("Consultar");
+        consultarMensalidade.setMnemonic('o');
+        consultarMensalidade.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PaymentConsultForm().setVisible(true);
+            }
+        });
+
         mensalidade.add(cadastrarMensalidade);
+        mensalidade.add(consultarMensalidade);
 
         bar.add(mensalidade);
     }
@@ -165,12 +162,10 @@ public class MenuWindow extends JFrame {
         if (user.getType() == UserTypeEnum.ADMINISTRADOR) {
             criarMenuAdmin();
             criarMenuCadastro();
-            criarMenuModalidade();
             criarMenuMensalidade();
         } else if (user.getType() == UserTypeEnum.CADASTRAL) {
             criarMenuCadastro();
         } else if (user.getType() == UserTypeEnum.FINANCEIRO) {
-            criarMenuModalidade();
             criarMenuMensalidade();
         }
 
