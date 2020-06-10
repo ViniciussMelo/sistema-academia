@@ -2,6 +2,7 @@ package database.models.modality;
 
 import database.models.Model;
 import database.models.address.Address;
+import database.models.payment.Payment;
 
 import javax.persistence.*;
 import java.time.LocalDate;

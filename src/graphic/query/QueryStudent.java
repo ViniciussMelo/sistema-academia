@@ -2,13 +2,16 @@ package graphic.Query;
 
 import database.models.modality.Modality;
 import database.models.modality.Student;
+import database.models.payment.Payment;
 import database.service.Service;
+import graphic.payment.PaymentConsultForm;
 
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -20,17 +23,19 @@ public class QueryStudent extends JDialog {
     private JTextField fieldDataNasc;
     private JTextField fieldName;
     private JTextField fieldMatricula;
-    private JPanel mensalidades;
-    private JTable tblMensalidades;
     private JCheckBox ativoCheckBox;
+    private JTable tblMensalidades;
     private JTable tlbModalidades;
     private JPanel modalities;
     private DefaultTableModel tblModel;
+    private DefaultTableModel tblModelP;
 
     public QueryStudent() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setSize(500, 500);
+        setLocationRelativeTo(null);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -76,13 +81,24 @@ public class QueryStudent extends JDialog {
             }
         };
 
+        tblModelP = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
         tblModel.addColumn("Nome");
         tblModel.addColumn("Valor");
         tlbModalidades.setModel(tblModel);
+
+        tblModelP.addColumn("Data Venci");
+        tblModelP.addColumn("Valor");
+        tblModelP.addColumn("Status Pago");
+        tblMensalidades.setModel(tblModelP);
     }
 
     private void onOK() {
-        // add your code here
         dispose();
     }
 
@@ -91,20 +107,22 @@ public class QueryStudent extends JDialog {
     }
 
     private void Buscar(){
-        SimpleDateFormat formatEN = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
         ValidaCampoInteiro(fieldMatricula);
 
         Integer codMatricula = Integer.parseInt(fieldMatricula.getText());
 
         Service<Student> studentService = new Service<>(Student.class);
+        Service<Payment> paymentService = new Service<>(Payment.class);
         Student student = studentService.find(codMatricula);
+        Payment payment = paymentService.find(codMatricula);
 
+        List<Payment> payments = payment.paymentStatusOpen(codMatricula);
         List<Modality> modalities = student.getModalities();
         fieldName.setText(student.getName());
-        ativoCheckBox.setBorderPaintedFlat(student.getActive());
-        fieldDataNasc.setText(formatEN.format(student.getBirthDate()));
+        fieldDataNasc.setText(student.getBirthDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        ativoCheckBox.setSelected(student.getActive());
 
+        addPaymentsInTable(payments);
         addModalitiesInTable(modalities);
 
     }
@@ -131,6 +149,16 @@ public class QueryStudent extends JDialog {
         }
     }
 
+    public void addPaymentsInTable(List<Payment> payments) {
+        for (Payment payment : payments) {
+            tblModelP.addRow(
+                    new String[]{
+                            String.valueOf(payment.getPayday()),
+                            String.valueOf(payment.getAmount()),
+                            String.valueOf(payment.getAmount_paid())
+                    });
+        }
+    }
 
     public static void main(String[] args) {
         QueryStudent dialog = new QueryStudent();

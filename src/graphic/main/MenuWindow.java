@@ -5,8 +5,12 @@ import database.models.user.User;
 import database.models.user.UserTypeEnum;
 import graphic.authentication.Login;
 import graphic.modality.ModalityForm;
+import graphic.payment.PaymentConsultForm;
+import graphic.payment.PaymentForm;
+import graphic.period.PeriodForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
+import graphic.query.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +27,8 @@ public class MenuWindow extends JFrame {
     private JMenuItem cadastroEmpresa;
     private JMenuItem cadastroModalidade;
     private JMenuItem cadastroAluno;
+    private JMenuItem cadastroPeriodo;
+    private JMenuItem consultarAluno;
 
     private JMenu modalidade;
     private JMenuItem jiujitsu;
@@ -30,6 +36,10 @@ public class MenuWindow extends JFrame {
 
     private JMenu horarios;
     private JMenuItem cadastroHorario;
+
+    private JMenu mensalidade;
+    private JMenuItem cadastrarMensalidade;
+    private JMenuItem consultarMensalidade;
 
     private JMenu produtos;
 
@@ -84,22 +94,55 @@ public class MenuWindow extends JFrame {
             }
         });
 
+        consultarAluno = new JMenuItem("Consultar");
+        consultarAluno.setMnemonic('Q');
+        cadastro.add(consultarAluno);
+        consultarAluno.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new graphic.Query.QueryStudent().setVisible(true);
+            }
+        });
+
+        cadastroPeriodo = new JMenuItem("Periodo");
+        cadastroPeriodo.setMnemonic('P');
+        cadastro.add(cadastroPeriodo);
+        cadastroPeriodo.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PeriodForm().setVisible(true);
+            }
+        });
+
         bar.add(cadastro);
     }
 
-    private void criarMenuModalidade() {
-        modalidade = new JMenu("Modalidade");
-        modalidade.setMnemonic('m');
+    private void criarMenuMensalidade(){
+        mensalidade = new JMenu("Mensalidade");
+        mensalidade.setMnemonic('e');
 
-        jiujitsu = new JMenuItem("Jiu Jitsu");
-        jiujitsu.setMnemonic('j');
-        modalidade.add(jiujitsu);
+        cadastrarMensalidade = new JMenuItem("Cadastrar");
+        cadastrarMensalidade.setMnemonic('c');
+        cadastrarMensalidade.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PaymentForm().setVisible(true);
+            }
+        });
 
-        karate = new JMenuItem("Karate");
-        karate.setMnemonic('k');
-        modalidade.add(karate);
+        consultarMensalidade = new JMenuItem("Consultar");
+        consultarMensalidade.setMnemonic('o');
+        consultarMensalidade.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PaymentConsultForm().setVisible(true);
+            }
+        });
 
-        bar.add(modalidade);
+        mensalidade.add(cadastrarMensalidade);
+        mensalidade.add(consultarMensalidade);
+
+        bar.add(mensalidade);
     }
 
     private void criarMenuAdmin() {
@@ -143,11 +186,11 @@ public class MenuWindow extends JFrame {
         if (user.getType() == UserTypeEnum.ADMINISTRADOR) {
             criarMenuAdmin();
             criarMenuCadastro();
-            criarMenuModalidade();
+            criarMenuMensalidade();
         } else if (user.getType() == UserTypeEnum.CADASTRAL) {
             criarMenuCadastro();
         } else if (user.getType() == UserTypeEnum.FINANCEIRO) {
-            criarMenuModalidade();
+            criarMenuMensalidade();
         }
 
         setJMenuBar(bar);
