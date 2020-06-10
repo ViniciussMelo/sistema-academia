@@ -75,14 +75,20 @@ public class PeriodForm extends JDialog implements Observer<Period> {
     }
 
     private void onOK() {
+        String mensagem = period.getId() != null ? "Atualizado com sucesso!" : "Salvo com sucesso!";
+
         String description = fieldDescription.getText();
         String endTime = fieldIEndTime.getText();
-        String initTime = fieldIEndTime.getText();
+        String initTime = fieldInitTime.getText();
 
         period.setEndTime(LocalTime.parse(endTime));
         period.setInitTime(LocalTime.parse(initTime));
         period.setDescription(description);
         period.save();
+
+        JOptionPane.showMessageDialog(null, mensagem);
+
+        clear();
 
         // dispose();
     }
@@ -97,6 +103,12 @@ public class PeriodForm extends JDialog implements Observer<Period> {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    public void clear() {
+        fieldDescription.setText("");
+        fieldInitTime.setText("");
+        fieldIEndTime.setText("");
     }
 
     @Override

@@ -166,7 +166,7 @@ public class MenuWindow extends JFrame {
         cadastroHorario.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new PeriodForm().setVisible(true);
+                new PeriodForm().setVisible(true);
             }
         });
 

@@ -2,12 +2,14 @@ package database.models.modality;
 
 import database.models.Model;
 import database.models.address.Address;
-import database.models.payment.Payment;
+import database.service.Service;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity(name = "students")
 public class Student extends Model<Student> {
@@ -81,6 +83,8 @@ public class Student extends Model<Student> {
 
     @Override
     public List<Student> filter(String value) {
-        return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", value);
+        return new Service<Student>(Student.class).findAllAndFilter(map);
     }
 }
