@@ -73,6 +73,24 @@ public class Payment extends Model<Payment> {
         return payment;
     }
 
+    public static List<Payment> findPaymentsByStudent(Student student){
+        if (student == null) {
+            return null;
+        }
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Payment> payment;
+
+        Query query = session.createQuery("SELECT p FROM database.models.payment.Payment as p " +
+                "inner join p.student as student "+
+                "WHERE (student.id =:codStudent or 0 =:codStudent) ");
+        query.setParameter("codStudent", student.getId());
+        payment = query.getResultList();
+        session.close();
+
+        return payment;
+    }
+
     public LocalDate getReference_month() {
         return reference_month;
     }

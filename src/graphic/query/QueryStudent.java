@@ -1,4 +1,4 @@
-package graphic.Query;
+package graphic.query;
 
 import database.models.modality.Modality;
 import database.models.modality.Student;
@@ -43,6 +43,13 @@ public class QueryStudent extends JDialog {
             }
         });
 
+        btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Buscar();
+            }
+        });
+
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
@@ -67,12 +74,6 @@ public class QueryStudent extends JDialog {
         fieldDataNasc.setEnabled(false);
         ativoCheckBox.setEnabled(false);
         fieldName.setEnabled(false);
-
-        btnBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Buscar();
-            }
-        });
 
         tblModel = new DefaultTableModel() {
             @Override
@@ -106,7 +107,14 @@ public class QueryStudent extends JDialog {
         dispose();
     }
 
-    private void Buscar(){
+    private void Buscar() {
+        for (int i = tblModel.getRowCount() - 1; i >= 0; i--) {
+            tblModel.removeRow(i);
+        }
+        for (int i = tblModelP.getRowCount() - 1; i >= 0; i--) {
+            tblModelP.removeRow(i);
+        }
+
         ValidaCampoInteiro(fieldMatricula);
 
         Integer codMatricula = Integer.parseInt(fieldMatricula.getText());
@@ -114,29 +122,31 @@ public class QueryStudent extends JDialog {
         Service<Student> studentService = new Service<>(Student.class);
         Service<Payment> paymentService = new Service<>(Payment.class);
         Student student = studentService.find(codMatricula);
-        Payment payment = paymentService.find(codMatricula);
 
-        List<Payment> payments = payment.paymentStatusOpen(codMatricula);
-        List<Modality> modalities = student.getModalities();
-        fieldName.setText(student.getName());
-        fieldDataNasc.setText(student.getBirthDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-        ativoCheckBox.setSelected(student.getActive());
+        if (student != null) {
+            List<Payment> payments = Payment.findPaymentsByStudent(student);
+            List<Modality> modalities = student.getModalities();
+            fieldName.setText(student.getName());
+            fieldDataNasc.setText(student.getBirthDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+            ativoCheckBox.setSelected(student.getActive());
 
-        addPaymentsInTable(payments);
-        addModalitiesInTable(modalities);
+            addPaymentsInTable(payments);
+            addModalitiesInTable(modalities);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum estudande encontrado com o codigo de matricula  " + codMatricula);
+        }
 
     }
 
-    private void ValidaCampoInteiro(JTextField fieldMatricula){
+    private void ValidaCampoInteiro(JTextField fieldMatricula) {
         Integer codigo;
 
-        if (fieldMatricula.getText().length() != 0){
-            try{
+        if (fieldMatricula.getText().length() != 0) {
+            try {
                 codigo = Integer.parseInt(fieldMatricula.getText());
-            }
-            catch (NumberFormatException ex){
+            } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Esse campo aceita apenas numero interios",
-                                            "Informação",JOptionPane.INFORMATION_MESSAGE);
+                        "Informação", JOptionPane.INFORMATION_MESSAGE);
 
                 fieldMatricula.grabFocus();
             }
@@ -144,12 +154,20 @@ public class QueryStudent extends JDialog {
     }
 
     public void addModalitiesInTable(List<Modality> modalities) {
+        if (modalities == null) {
+            return;
+        }
+
         for (Modality modality : modalities) {
             tblModel.addRow(new String[]{modality.getDescription(), modality.getValue().toString()});
         }
     }
 
     public void addPaymentsInTable(List<Payment> payments) {
+        if (payments == null) {
+            return;
+        }
+
         for (Payment payment : payments) {
             tblModelP.addRow(
                     new String[]{

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="graphic.Query.QueryStudent">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="graphic.query.QueryStudent">
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
@@ -125,80 +125,6 @@
               <text value="Buscar"/>
             </properties>
           </component>
-          <scrollpane id="e2244">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <grid id="681e5" layout-manager="GridBagLayout">
-                <constraints/>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <hspacer id="66034">
-                    <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                  </hspacer>
-                  <vspacer id="aa5a9">
-                    <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                  </vspacer>
-                  <component id="f2d50" class="javax.swing.JTable" binding="tblMensalidades">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="50"/>
-                      </grid>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                    <properties/>
-                  </component>
-                </children>
-              </grid>
-            </children>
-          </scrollpane>
-          <scrollpane id="1a770">
-            <constraints>
-              <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <grid id="aa042" layout-manager="GridBagLayout">
-                <constraints/>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <hspacer id="eeb56">
-                    <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                  </hspacer>
-                  <vspacer id="24c2a">
-                    <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                  </vspacer>
-                  <component id="5d473" class="javax.swing.JTable" binding="tlbModalidades">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="50"/>
-                      </grid>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                    <properties/>
-                  </component>
-                </children>
-              </grid>
-            </children>
-          </scrollpane>
           <component id="6ab82" class="javax.swing.JCheckBox" binding="ativoCheckBox" default-binding="true">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -207,6 +133,32 @@
               <text value="Ativo"/>
             </properties>
           </component>
+          <scrollpane id="2121c">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="b99b4" class="javax.swing.JTable" binding="tblMensalidades">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+          <scrollpane id="9a20e">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="43719" class="javax.swing.JTable" binding="tlbModalidades">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
     </children>

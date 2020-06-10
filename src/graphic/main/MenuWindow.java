@@ -100,7 +100,7 @@ public class MenuWindow extends JFrame {
         consultarAluno.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new graphic.Query.QueryStudent().setVisible(true);
+                new graphic.query.QueryStudent().setVisible(true);
             }
         });
 
