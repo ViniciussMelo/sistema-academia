@@ -4,13 +4,21 @@ import database.models.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity(name = "periods")
 public class Period extends Model<Period> {
 
-    @Column(name = "description")
+    @Column
     private String description;
+
+    @Column
+    private LocalTime initTime;
+
+    @Column
+    private LocalTime endTime;
 
     public String getDescription() {
         return description;
@@ -20,9 +28,25 @@ public class Period extends Model<Period> {
         this.description = description;
     }
 
+    public LocalTime getInitTime() {
+        return initTime;
+    }
+
+    public void setInitTime(LocalTime initTime) {
+        this.initTime = initTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public String[] getResult() {
-        return new String[0];
+        return new String[]{getDescription(), getInitTime().format(DateTimeFormatter.ISO_TIME), getEndTime().format(DateTimeFormatter.ISO_TIME)};
     }
 
     @Override

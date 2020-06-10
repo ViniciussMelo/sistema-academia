@@ -7,6 +7,7 @@ import graphic.authentication.Login;
 import graphic.modality.ModalityForm;
 import graphic.payment.PaymentConsultForm;
 import graphic.payment.PaymentForm;
+import graphic.period.PeriodForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
 
@@ -25,6 +26,7 @@ public class MenuWindow extends JFrame {
     private JMenuItem cadastroEmpresa;
     private JMenuItem cadastroModalidade;
     private JMenuItem cadastroAluno;
+    private JMenuItem cadastroPeriodo;
 
     private JMenu modalidade;
     private JMenuItem jiujitsu;
@@ -87,6 +89,16 @@ public class MenuWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new StudentForm().setVisible(true);
+            }
+        });
+
+        cadastroPeriodo = new JMenuItem("Periodo");
+        cadastroPeriodo.setMnemonic('P');
+        cadastro.add(cadastroPeriodo);
+        cadastroPeriodo.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PeriodForm().setVisible(true);
             }
         });
 
