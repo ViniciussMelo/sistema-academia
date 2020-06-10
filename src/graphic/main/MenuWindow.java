@@ -10,6 +10,7 @@ import graphic.payment.PaymentForm;
 import graphic.period.PeriodForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
+import graphic.query.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ public class MenuWindow extends JFrame {
     private JMenuItem cadastroModalidade;
     private JMenuItem cadastroAluno;
     private JMenuItem cadastroPeriodo;
+    private JMenuItem consultarAluno;
 
     private JMenu modalidade;
     private JMenuItem jiujitsu;
@@ -89,6 +91,16 @@ public class MenuWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new StudentForm().setVisible(true);
+            }
+        });
+
+        consultarAluno = new JMenuItem("Consultar");
+        consultarAluno.setMnemonic('Q');
+        cadastro.add(consultarAluno);
+        consultarAluno.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new graphic.Query.QueryStudent().setVisible(true);
             }
         });
 
