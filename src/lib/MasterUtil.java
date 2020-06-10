@@ -1,29 +1,57 @@
 package lib;
 
+import database.connection.HibernateUtil;
+import database.models.user.User;
+import org.hibernate.Session;
+
 import javax.swing.*;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
+import java.util.List;
 
 public class MasterUtil {
 
-    public static void makeBackup() {
-        File diretorio = new File("./Backup");
-        File arquivo = new File("./Backup/Unesc.sql");
+    public static void main(String[] args) {
+        MasterUtil.backup();
+    }
 
-        if (!diretorio.isDirectory()) {
-            diretorio.mkdir();
+    public static void backup() {
+        File dir = new File("./resource/backup");
+        File arquivo = new File("./resource/backup/dump.sql");
+
+        if (!dir.isDirectory()) {
+            dir.mkdir();
         }
 
         try {
             if (arquivo.isFile()) {
-                if (JOptionPane.showConfirmDialog(null, "Já existe um backup deseja sobescrever?") == JOptionPane.YES_OPTION) {
-
+                if (JOptionPane.showConfirmDialog(null, "Deseja sobrescrever o arquivo?") == JOptionPane.YES_OPTION) {
+                    arquivo.delete();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Backup cancelado pelo usuaio.");
+                    return;
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Cancelado!");
+            }
+
+            if (new File("./backupRunner.bat").isFile()) {
+                Process process = Runtime.getRuntime().exec("./backupRunner.bat");
+                process.waitFor();
+
+                if (process.exitValue() == 0) {
+                    JOptionPane.showMessageDialog(null, "Backup concluido com sucesso");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao fazer backup");
+                }
             }
         } catch (Exception e) {
-
+            JOptionPane.showMessageDialog(null, "Exceção no backup: " + e.getMessage());
         }
+
     }
 
 }
