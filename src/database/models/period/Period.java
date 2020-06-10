@@ -1,12 +1,16 @@
 package database.models.period;
 
 import database.models.Model;
+import database.models.user.User;
+import database.service.Service;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity(name = "periods")
 public class Period extends Model<Period> {
@@ -51,6 +55,8 @@ public class Period extends Model<Period> {
 
     @Override
     public List<Period> filter(String value) {
-        return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("description", value);
+        return new Service<Period>(Period.class).findAllAndFilter(map);
     }
 }
