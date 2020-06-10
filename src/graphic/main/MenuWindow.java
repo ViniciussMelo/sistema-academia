@@ -5,6 +5,7 @@ import database.models.user.User;
 import database.models.user.UserTypeEnum;
 import graphic.authentication.Login;
 import graphic.modality.ModalityForm;
+import graphic.payment.PaymentForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
 
@@ -30,6 +31,9 @@ public class MenuWindow extends JFrame {
 
     private JMenu horarios;
     private JMenuItem cadastroHorario;
+
+    private JMenu mensalidade;
+    private JMenuItem cadastrarMensalidade;
 
     private JMenu produtos;
 
@@ -102,6 +106,24 @@ public class MenuWindow extends JFrame {
         bar.add(modalidade);
     }
 
+    private void criarMenuMensalidade(){
+        mensalidade = new JMenu("Mensalidade");
+        mensalidade.setMnemonic('e');
+
+        cadastrarMensalidade = new JMenuItem("Cadastrar");
+        cadastrarMensalidade.setMnemonic('c');
+        cadastrarMensalidade.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PaymentForm().setVisible(true);
+            }
+        });
+
+        mensalidade.add(cadastrarMensalidade);
+
+        bar.add(mensalidade);
+    }
+
     private void criarMenuAdmin() {
         sistema = new JMenu("Sistema");
         sistema.setMnemonic('S');
@@ -144,10 +166,12 @@ public class MenuWindow extends JFrame {
             criarMenuAdmin();
             criarMenuCadastro();
             criarMenuModalidade();
+            criarMenuMensalidade();
         } else if (user.getType() == UserTypeEnum.CADASTRAL) {
             criarMenuCadastro();
         } else if (user.getType() == UserTypeEnum.FINANCEIRO) {
             criarMenuModalidade();
+            criarMenuMensalidade();
         }
 
         setJMenuBar(bar);

@@ -156,6 +156,7 @@ public class ModalityForm extends JDialog {
             value = BigDecimal.valueOf(Double.parseDouble(txtValue.getText()));
         }catch (NumberFormatException nf){
             JOptionPane.showMessageDialog(null, "O campo 'valor' deve ser um numero!");
+            gravar = false;
         }
 
         if(selectedPeriods.isEmpty()){
