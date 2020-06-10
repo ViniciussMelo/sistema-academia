@@ -1,70 +1,115 @@
 package database.models.payment;
 
+import database.connection.HibernateUtil;
 import database.models.Model;
+import database.models.modality.Modality;
+import database.models.modality.Student;
 import database.models.user.User;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "payment")
+@Entity(name = "payments")
 public class Payment extends Model<Payment> {
 
     @Column(name = "referenceMonth")
-    private Date reference_month;
+    private LocalDate reference_month;
 
-    @JoinColumn(name = "userId", foreignKey =  @ForeignKey(name = "payment_userId"))
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "student_id", foreignKey = @ForeignKey(name = "payment_student_id"))
+    private Student student;
 
     @Column(name = "payday")
-    private Date payday;
+    private LocalDate payday;
 
     @Column(name = "amount")
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(name = "amountPaid")
-    private Double amount_paid;
+    private BigDecimal amount_paid;
 
-    public Date getReference_month() {
+    public static BigDecimal totalValueModalities(Student student){
+        List<Modality> modalities = student.getModalities();
+        BigDecimal valueAmount = BigDecimal.ZERO;
+
+        for (Modality modality: modalities) {
+            valueAmount = valueAmount.add(modality.getValue());
+        }
+
+        return valueAmount;
+    }
+
+    public static List<Payment> paymentStatusOpen(Integer codStudent){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Payment> payment;
+
+        Query query = session.createQuery("SELECT p FROM database.models.payment.Payment as p " +
+                                            "inner join p.student as student "+
+                                            "WHERE p.amount > p.amount_paid and (student.id =:codStudent or 0 =:codStudent) ");
+        query.setParameter("codStudent", codStudent);
+        payment = query.getResultList();
+        session.close();
+
+        return payment;
+    }
+
+    public static List<Payment> paymentStatusPaid(Integer codStudent){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Payment> payment;
+
+        Query query = session.createQuery("SELECT p FROM database.models.payment.Payment as p " +
+                                            "inner join p.student as student "+
+                                            "WHERE p.amount = p.amount_paid and (student.id =:codStudent or 0 =:codStudent) ");
+        query.setParameter("codStudent", codStudent);
+        payment = query.getResultList();
+        session.close();
+
+        return payment;
+    }
+
+    public LocalDate getReference_month() {
         return reference_month;
     }
 
-    public void setReference_month(Date reference_month) {
+    public void setReference_month(LocalDate reference_month) {
         this.reference_month = reference_month;
     }
 
-    public User getUser() {
-        return user;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Date getPayday() {
+    public LocalDate getPayday() {
         return payday;
     }
 
-    public void setPayday(Date payday) {
+    public void setPayday(LocalDate payday) {
         this.payday = payday;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public Double getAmount_paid() {
+    public BigDecimal getAmount_paid() {
         return amount_paid;
     }
 
-    public void setAmount_paid(Double amount_paid) {
+    public void setAmount_paid(BigDecimal amount_paid) {
         this.amount_paid = amount_paid;
     }
 

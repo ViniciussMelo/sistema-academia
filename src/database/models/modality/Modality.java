@@ -12,9 +12,9 @@ import java.util.List;
 @Entity(name = "modalities")
 public class Modality extends Model<Modality> {
 
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "modality_userId"))
-    @ManyToOne
-    private User teacher;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "modality_users")
+    private List<User> teacher = new ArrayList<>();
 
     @Column(name = "description")
     private String description;
@@ -22,12 +22,18 @@ public class Modality extends Model<Modality> {
     @Column(name = "value")
     private BigDecimal value;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "modality_periods")
+    @JoinTable(name = "modalities_periods",
+            joinColumns = {@JoinColumn(name = "modality_id")},
+            inverseJoinColumns = {@JoinColumn(name = "period_id")})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Period> period = new ArrayList<>();
 
-    public User getTeacher() {
+    public List<User> getTeacher() {
         return teacher;
+    }
+
+    public void setTeacher(List<User> teacher) {
+        this.teacher = teacher;
     }
 
     public String getDescription() {
@@ -40,10 +46,6 @@ public class Modality extends Model<Modality> {
 
     public List<Period> getPeriod() {
         return period;
-    }
-
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
     }
 
     public void setDescription(String description) {

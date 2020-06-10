@@ -1,9 +1,6 @@
 package database.connection;
 
-import database.seeders.CitySeeder;
-import database.seeders.Seeder;
-import database.seeders.StateSeeder;
-import database.seeders.UserSeeder;
+import database.seeders.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -13,7 +10,7 @@ import java.util.List;
 public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
-    private static List<Seeder> seeders = Arrays.asList(new UserSeeder(), new StateSeeder(), new CitySeeder());
+    private static List<Seeder> seeders = Arrays.asList(new UserSeeder(), new StateSeeder(), new CitySeeder(), new PeriodSeeder());
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {

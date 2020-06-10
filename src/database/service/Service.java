@@ -85,7 +85,11 @@ public class Service<T extends Model<T>> {
 
         if (columns != null && !columns.isEmpty()) {
             columns.forEach((column, value) -> {
-                criteria.where(builder.like(root.get(column), "%" + (String) value + "%"));
+                if(value instanceof String){
+                    criteria.where(builder.like(root.get(column), "%" + value + "%"));
+                }else{
+                    criteria.where(builder.equal(root.get(column), value));
+                }
             });
         }
 

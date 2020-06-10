@@ -15,7 +15,7 @@ public class Student extends Model<Student> {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "student_modalities",
+    @JoinTable(name = "modality_students",
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "modality_id")})
     private List<Modality> modalities = new ArrayList<>();

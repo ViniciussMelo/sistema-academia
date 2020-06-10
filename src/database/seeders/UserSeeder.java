@@ -36,6 +36,12 @@ public class UserSeeder implements Seeder {
         userFinanceiro.setPassword("financeiro");
         userFinanceiro.setType(UserTypeEnum.FINANCEIRO);
         userFinanceiro.save();
+
+        User userProfessor = new User();
+        userFinanceiro.setName("user_professor");
+        userFinanceiro.setPassword("professor");
+        userFinanceiro.setType(UserTypeEnum.PROFESSOR);
+        userFinanceiro.save();
         System.out.println("[Seeder] UserSeeder runned.");
     }
 }

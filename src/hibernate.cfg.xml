@@ -20,5 +20,6 @@
         <mapping class="database.models.modality.Modality"/>
         <mapping class="database.models.modality.Student"/>
         <mapping class="database.models.period.Period"/>
+        <mapping class="database.models.payment.Payment"/>
     </session-factory>
 </hibernate-configuration>
