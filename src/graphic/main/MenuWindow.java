@@ -8,6 +8,7 @@ import graphic.modality.ModalityForm;
 import graphic.student.StudentForm;
 import graphic.user.UserForm;
 
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -23,6 +24,7 @@ public class MenuWindow extends JFrame {
     private JMenuItem cadastroEmpresa;
     private JMenuItem cadastroModalidade;
     private JMenuItem cadastroAluno;
+    private JMenuItem consultaAluno;
 
     private JMenu modalidade;
     private JMenuItem jiujitsu;
@@ -53,6 +55,16 @@ public class MenuWindow extends JFrame {
     private void criarMenuCadastro() {
         cadastro = new JMenu("Cadastro");
         cadastro.setMnemonic('C');
+
+        consultaAluno = new JMenuItem("Consulta");
+        consultaAluno.setMnemonic('Q');
+        cadastro.add(consultaAluno);
+        consultaAluno.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new graphic.Query.QueryStudent().setVisible(true);
+            }
+        });
 
         cadastroUsuario = new JMenuItem("Usuário");
         cadastroUsuario.setMnemonic('U');
