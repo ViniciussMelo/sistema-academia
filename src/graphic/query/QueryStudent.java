@@ -94,8 +94,8 @@ public class QueryStudent extends JDialog {
         tlbModalidades.setModel(tblModel);
 
         tblModelP.addColumn("Data Venci");
-        tblModelP.addColumn("Valor");
-        tblModelP.addColumn("Status Pago");
+        tblModelP.addColumn("Valor total");
+        tblModelP.addColumn("Valor Pago");
         tblMensalidades.setModel(tblModelP);
     }
 

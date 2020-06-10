@@ -24,18 +24,10 @@ public class MenuWindow extends JFrame {
 
     private JMenu cadastro;
     private JMenuItem cadastroUsuario;
-    private JMenuItem cadastroEmpresa;
     private JMenuItem cadastroModalidade;
     private JMenuItem cadastroAluno;
     private JMenuItem cadastroPeriodo;
     private JMenuItem consultarAluno;
-
-    private JMenu modalidade;
-    private JMenuItem jiujitsu;
-    private JMenuItem karate;
-
-    private JMenu horarios;
-    private JMenuItem cadastroHorario;
 
     private JMenu mensalidade;
     private JMenuItem cadastrarMensalidade;
@@ -157,24 +149,10 @@ public class MenuWindow extends JFrame {
         sistemaSair.setMnemonic('a');
         sistema.add(sistemaSair);
 
-        horarios = new JMenu("Horarios");
-        horarios.setMnemonic('h');
-
-        cadastroHorario = new JMenuItem("Cadastro");
-        cadastroHorario.setMnemonic('C');
-        horarios.add(cadastroHorario);
-        cadastroHorario.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //new PeriodForm().setVisible(true);
-            }
-        });
-
         produtos = new JMenu("Produtos");
         produtos.setMnemonic('p');
 
         bar.add(sistema);
-        bar.add(horarios);
         bar.add(produtos);
     }
 
